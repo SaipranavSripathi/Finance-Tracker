@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Analysis</title>
+   <link rel="stylesheet" href="../css/style.css">
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <style>
+       body {
+           font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+           margin: 0;
+           padding: 0;
+           box-sizing: border-box;
+           background-color: #f5f5f5;
+           color: #333;
+           display: flex;
+       }
+
+
+       nav {
+           background-color: #1a237e;
+           color: #fff;
+           width: 250px;
+           height: 100vh;
+           position: fixed;
+           left: 0;
+           top: 0;
+           padding: 1.5rem 0;
+           box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+       }
+
+
+       nav ul {
+           list-style: none;
+           padding: 0;
+           margin: 0;
+           display: flex;
+           flex-direction: column;
+           gap: 0.5rem;
+       }
+
+
+       nav ul li {
+           padding: 0 1rem;
+       }
+
+
+       nav ul li a {
+           color: #fff;
+           text-decoration: none;
+           padding: 0.75rem 1rem;
+           border-radius: 6px;
+           display: block;
+           transition: background-color 0.3s ease;
+       }
+
+
+       nav ul li a:hover {
+           background-color: rgba(255, 255, 255, 0.1);
+       }
+
+
+       main {
+           margin-left: 250px;
+           padding: 2rem;
+           width: 100%;
+       }
+
+
+       header {
+           text-align: center;
+           margin-bottom: 2rem;
+       }
+
+
+       header h1 {
+           color: #1a237e;
+           font-size: 2rem;
+           margin: 0;
+       }
+
+
+       canvas {
+           background-color: #fff;
+           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+           border-radius: 12px;
+           width: 50%; /* Adjusted width */
+           height: 250px; /* Adjusted height */
+           margin: 0 auto; /* Centering the canvas */
+       }
+   </style>
+</head>
+<body>
+   <header class="header">
+       <div id="header-content">
+           <!-- Dynamic content will be inserted here -->
+       </div>
+   </header>
+   <!-- Navbar -->
+   <nav>
+       <ul>
+           <li>
+               <a href="./index.html">Home</a>
+           </li>
+           <li><a href="./transaction.html">Transactions</a></li>
+           <li><a href="./account.html">Accounts</a></li>
+           <li><a href="./loans.html">Loans</a></li>
+           <li><a href="./budget.html">Budgets</a></li>
+           <li><a href="./goal.html">Goals</a></li>
+           <li><a href="./investment.html">Investment</a></li>
+           <li><a href="./analysis.html">Analysis</a></li>
+       </ul>
+   </nav>
+
+
+   <!-- Main Content -->
+   <main>
+       <header>
+           <h1>Financial Analysis</h1>
+       </header>
+
+
+       <canvas id="analysisChart"></canvas>
+   </main>
+
+
+   <script>
+       document.addEventListener('DOMContentLoaded', async () => {
+   // Retrieve user_id from sessionStorage
+   const user_id = sessionStorage.getItem("user_id");
+  
+   if (!user_id) {
+       alert("User ID is missing. Please log in again.");
+       return;
+   }
+
+
+   console.log("User ID:", user_id);
+  
+   // Define the payload
+   const payload = { user_id: user_id };
+   console.log("Payload:", payload);
+
+
+   try {
+       // Fetch data from the API
+       const res = await fetch('http://127.0.0.1:5000/aggregate', {
+           method: 'POST',
+           headers: { 'Content-Type': 'application/json' },
+           body: JSON.stringify(payload)
+       });
+
+
+       if (res.ok) {
+           // Parse the response data
+           const data = await res.json();
+
+
+           // Check if the aggregate data is present
+           if (data.aggregate && data.aggregate.length > 0) {
+               const aggregate = data.aggregate[0]; // Assuming there's only one aggregate entry per user
+
+
+               // Prepare data for the chart
+               const totalIncome = aggregate.total_income || 0;
+               const totalExpenditure = aggregate.total_expenditure || 0;
+               const savings = Math.max(totalIncome - totalExpenditure, 0);
+
+
+               // Setup Chart.js data
+               const ctx = document.getElementById('analysisChart').getContext('2d');
+               const analysisChart = new Chart(ctx, {
+                   type: 'pie',
+                   data: {
+                       labels: ['Income', 'Savings', 'Expenditure'],
+                       datasets: [{
+                           label: 'Financial Overview',
+                           data: [totalIncome, savings, totalExpenditure],
+                           backgroundColor: ['#FFC300', '#4CAF50', '#FF5733']
+                       }]
+                   },
+                   options: {
+                       responsive: true,
+                       plugins: {
+                           legend: {
+                               position: 'top',
+                           },
+                           tooltip: {
+                               callbacks: {
+                                   label: function(tooltipItem) {
+                                       return `${tooltipItem.label}: $${tooltipItem.raw}`;
+                                   }
+                               }
+                           }
+                       }
+                   }
+               });
+           } else {
+               alert("No aggregate data found for this user.");
+           }
+       } else {
+           throw new Error('Failed to fetch data from the API.');
+       }
+   } catch (error) {
+       console.error("Error fetching aggregate data:", error);
+       alert("An error occurred while fetching the aggregate data.");
+   }
+});
+
+
+   </script>
+</body>
+</html>

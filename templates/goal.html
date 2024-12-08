@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goals</title>
+    <style>
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+    color: #333;
+    display: flex;
+}
+
+nav {
+    background-color: #1a237e;
+    color: #fff;
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 1.5rem 0;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+nav ul li {
+    padding: 0 1rem;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.main-content {
+    margin-left: 250px;
+    flex: 1;
+    padding: 2rem;
+}
+
+.content-header {
+    margin-bottom: 2rem;
+}
+
+.content-header h1 {
+    color: #1a237e;
+    font-size: 2rem;
+    margin: 0 0 1rem 0;
+}
+
+.cont {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.add-account,
+.list-accounts {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section-header {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #1a237e;
+}
+
+form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #555;
+}
+
+form input,
+form select {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+form input:focus,
+form select:focus {
+    outline: none;
+    border-color: #1a237e;
+    box-shadow: 0 0 0 2px rgba(26, 35, 126, 0.1);
+}
+
+form button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #1a237e;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #283593;
+}
+
+.accounts-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 1rem;
+}
+
+.accounts-table th,
+.accounts-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.accounts-table th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+    color: #1a237e;
+}
+
+.accounts-table tr:last-child td {
+    border-bottom: none;
+}
+
+
+
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+    
+    nav {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 1rem;
+    }
+    
+    nav ul {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+    }
+    
+    .cont {
+        grid-template-columns: 1fr;
+    }
+}
+    </style>
+    <!-- Remove this line -->
+    <!-- <link rel="stylesheet" href="../css/style.css"> -->
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./transaction.html">Transactions</a></li>
+            <li><a href="./account.html">Accounts</a></li>
+            <li><a href="./loans.html">Loans</a></li>
+            <li><a href="./budget.html">Budgets</a></li>
+            <li><a href="./goal.html">Goals</a></li>
+            <li><a href="./investment.html">Investment</a></li>
+            <li><a href="./analysis.html">Analysis</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <div class="content-header">
+            <h1>Goals</h1>
+        </div>
+
+        <div class="cont">
+            <div class="add-account">
+                <div class="section-header">Add New Goal</div>
+                <form id="goals-form">
+                    <label for="goal-name">Goal Name</label>
+                    <input type="text" id="goal-name" name="goal-name" required>
+
+                    <label for="goal-amount">Target Amount</label>
+                    <input type="number" id="goal-amount" name="goal-amount" required>
+
+                    <label for="deadline">Deadline</label>
+                    <input type="date" id="deadline" name="deadline" required>
+
+                    <button type="submit">Add Goal</button>
+                </form>
+            </div>
+
+            <div class="list-accounts">
+                <div class="section-header">Your Goals</div>
+                <table class="accounts-table">
+                    <thead>
+                        <tr>
+                            <th>Goal Name</th>
+                            <th>Target Amount</th>
+                            <th>Deadline</th>
+                            <th>Progress</th>
+                        </tr>
+                    </thead>
+                    <tbody id="goals-list">
+                        <!-- Sample goal data -->
+                        <tr>
+                            <td>Emergency Fund</td>
+                            <td>$10,000.00</td>
+                            <td>2024-12-31</td>
+                            <td>45%</td>
+                        </tr>
+                        <tr>
+                            <td>New Car</td>
+                            <td>$25,000.00</td>
+                            <td>2025-06-30</td>
+                            <td>20%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const user_id = sessionStorage.getItem("user_id");
+            try {
+                // Fetch goals from the endpoint
+                const response = await fetch('http://127.0.0.1:5000/goal', {
+                    method: 'POST',  // Changed from GET to POST to match the backend
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ user_id: user_id }) // Add user_id in the request body
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.goal) {
+                        populateGoalsTable(data.goal);
+                    } else {
+                        goalsList.innerHTML = '<tr><td colspan="4">No goals found</td></tr>';
+                    }
+                } else {
+                    const errorData = await response.json();
+                    console.error('Error fetching goals:', errorData.message);
+                    // alert('Failed to fetch goals: ' + errorData.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while fetching goals.');
+            }
+        });
+
+        function populateGoalsTable(goals) {
+            const goalsList = document.getElementById('goals-list');
+            goalsList.innerHTML = ''; // Clear existing rows
+
+            goals.forEach(goal => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${goal.name}</td>
+                    <td>$${goal.target}</td>
+                    <td>${goal.deadline}</td>
+                    <td>${goal.progress || 0}%</td>
+                `;
+                goalsList.appendChild(row);
+            });
+        }
+
+        document.getElementById('goals-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const goalName = document.getElementById('goal-name').value;
+            const goalAmount = parseFloat(document.getElementById('goal-amount').value);
+            const deadline = document.getElementById('deadline').value;
+            const user_id = sessionStorage.getItem("user_id");
+
+            const payload = {
+                name: goalName,
+                target: goalAmount,
+                deadline: deadline,
+                user_id: user_id
+            };
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/add_goal', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    const responseData = await response.json();
+                    alert('Goal added successfully!');
+                    location.reload(); // Refresh the page to show the new goal
+                } else {
+                    const errorData = await response.json();
+                    alert('Error adding goal: ' + errorData.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while adding the goal. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

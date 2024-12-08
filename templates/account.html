@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Management</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+        }
+
+
+
+
+
+
+
+       /* Add header styles to match the first file */
+       .header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            padding: 1rem 2rem;
+            z-index: 101;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .auth-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .logout-button {
+            background-color: #1a237e;
+            color: #fff;
+            border: 2px solid  #1a237e;
+        }
+
+        /* Rest of your existing styles */
+        nav {
+            background-color: #1a237e;
+            color: #fff;
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding: 1.5rem 0;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Your other existing styles... */
+
+        @media (max-width: 768px) {
+            .header {
+                position: absolute;
+                padding: 1rem;
+            }
+            
+            /* Your other existing media query styles... */
+        }
+
+
+
+
+
+
+
+
+        nav {
+            background-color: #1a237e;
+            color: #fff;
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding: 1.5rem 0;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        nav ul li {
+            padding: 0 1rem;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .main-content {
+            margin-left: 250px;
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .content-header {
+            margin-bottom: 2rem;
+        }
+
+        .content-header h1 {
+            color: #1a237e;
+            font-size: 2rem;
+            margin: 0 0 1rem 0;
+        }
+
+        .cont {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .add-account,
+        .list-accounts {
+            background-color: #ffffff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #1a237e;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #555;
+        }
+
+        form input,
+        form select {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        form input:focus,
+        form select:focus {
+            outline: none;
+            border-color: #1a237e;
+            box-shadow: 0 0 0 2px rgba(26, 35, 126, 0.1);
+        }
+
+        form button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: #283593;
+        }
+
+        .accounts-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 1rem;
+        }
+
+        .accounts-table th,
+        .accounts-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .accounts-table th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+            color: #1a237e;
+        }
+
+        .accounts-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            
+            nav {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 1rem;
+            }
+            
+            nav ul {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+            
+            .cont {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Dynamic header -->
+    <header class="header">
+        <div id="header-content">
+            <!-- Dynamic content will be inserted here -->
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./transaction.html">Transactions</a></li>
+            <li><a href="./account.html">Accounts</a></li>
+            <li><a href="./loans.html">Loans</a></li>
+            <li><a href="./budget.html">Budgets</a></li>
+            <li><a href="./goal.html">Goals</a></li>
+            <li><a href="./investment.html">Investment</a></li>
+            <li><a href="./analysis.html">Analysis</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <div class="content-header">
+            <h1>Account Management</h1>
+        </div>
+
+        <div class="cont">
+            <!-- Add Account Section -->
+            <div class="add-account">
+                <div class="section-header">Add New Account</div>
+                <form id="account-form">
+                    <label for="account-name">Account Name</label>
+                    <input type="text" id="account-name" name="account-name" required>
+
+                    <label for="account-type">Account Type</label>
+                    <select id="account-type" name="account-type" required>
+                        <option value="Savings">Savings</option>
+                        <option value="Current">Current</option>
+                    </select>
+
+                    <label for="current-balance">Current Balance</label>
+                    <input type="number" id="current-balance" name="current_balance" min="0" placeholder="Enter balance" required>                    
+
+                    <label for="category-id">Category</label>
+                    <select id="category-id" name="category-id" required>
+                        <option value="housing">Housing</option>
+                        <option value="transportation">Transportation</option>
+                        <option value="food">Food & Groceries</option>
+                        <option value="utilities">Utilities</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="healthcare">Healthcare</option>
+                        <option value="savings">Savings</option>
+                        <option value="other">Other</option>
+                    </select>
+
+                    <button type="submit">Add Account</button>
+                </form>
+            </div>
+
+            <!-- Account List Section -->
+            <div class="list-accounts">
+                <div class="section-header">Your Accounts</div>
+                <table class="accounts-table">
+                    <thead>
+                        <tr>
+                            <th>Account Number</th>
+                            <th>Account Name</th>
+                            <th>Type</th>
+                            <th>Balance</th>
+                            <th>Category</th>
+                        </tr>
+                    </thead>
+                    <tbody id="accounts-list">
+                        <!-- Accounts will be dynamically populated -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Populate accounts table
+        function fetchAccounts(userId) {
+            fetch("http://127.0.0.1:5000/accounts", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user_id: userId }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.error) {
+                        alert("Error fetching accounts: " + data.error);
+                    } else {
+                        populateAccountsTable(data.account);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error fetching accounts:", error);
+                    alert("An error occurred while fetching accounts.");
+                });
+        }
+
+        // Populate the accounts table
+        function populateAccountsTable(accounts) {
+            const accountsList = document.getElementById("accounts-list");
+            accountsList.innerHTML = ""; // Clear existing rows
+            accounts.forEach((account) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${account.account_number}</td>
+                    <td>${account.name}</td>
+                    <td>${account.type}</td>
+                    <td>${account.current_balance}</td>
+                    <td>${account.category_id}</td>
+                `;
+                accountsList.appendChild(row);
+            });
+        }
+
+        // Add account form submission
+        document.getElementById("account-form").addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const userId = sessionStorage.getItem("user_id");
+            const accountName = document.getElementById("account-name").value;
+            const accountType = document.getElementById("account-type").value;
+            const currentBalance = parseFloat(document.getElementById("current-balance").value);
+            const categoryId = document.getElementById("category-id").value;
+
+            // Debugging logs
+            console.log("user_id:", userId);
+            console.log("name:", accountName);
+            console.log("type:", accountType);
+            console.log("current_balance:", currentBalance);
+            console.log("category_id:", categoryId);
+
+            fetch("http://127.0.0.1:5000/add_accounts", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    user_id: userId,
+                    name: accountName,
+                    type: accountType,
+                    current_balance: currentBalance,
+                    category_id: categoryId,
+                }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.error) {
+                        console.error("API Error:", data.error);
+                        alert("Error adding account: " + data.error);
+                    } else {
+                        alert("Account added successfully!");
+                        fetchAccounts(userId); // Refresh the account list
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error adding account:", error);
+                    alert("An error occurred while adding the account.");
+                });
+        });
+
+        // Fetch accounts on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            const userId = sessionStorage.getItem("user_id");
+            if (userId) {
+                fetchAccounts(userId);
+            } else {
+                alert("Please log in to view accounts.");
+            }
+        });
+    </script>
+</body>
+
+</html>

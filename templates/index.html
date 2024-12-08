@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Finance Tracker</title>
+    <style>
+        /* Previous styles remain the same */
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #333;
+        }
+
+        nav {
+            background-color: #1a237e;
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding: 1.5rem 0;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        /* Updated header styles for both buttons */
+        .header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            padding: 1rem 2rem;
+            z-index: 101;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .auth-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .login-button {
+            background-color: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+
+        .login-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .signup-button {
+            background-color: #fff;
+            color: #1a237e;
+            border: 2px solid #fff;
+        }
+
+        .signup-button:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Rest of the previous styles */
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        nav ul li {
+            padding: 0 1rem;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .main-content {
+            margin-left: 250px;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #491bb3 0%, #283593 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .hero-section h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-section p {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #fff;
+            color: #1a237e;
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .features {
+            padding: 4rem 2rem;
+            background: #f5f5f5;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: #1a237e;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card h3 {
+            color: #1a237e;
+            margin: 1rem 0;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .footer {
+            background: #1a237e;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 1rem;
+            }
+            
+            nav ul {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+
+            .hero-section {
+                padding: 3rem 1rem;
+            }
+
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+
+            .header {
+                position: absolute;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Dynamic header -->
+    <header class="header">
+        <div id="header-content">
+            <!-- Dynamic content will be inserted here -->
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./transaction.html" onclick="return checkLogin()">Transactions</a></li>
+            <li><a href="./account.html" onclick="return checkLogin()">Accounts</a></li>
+            <li><a href="./loans.html" onclick="return checkLogin()">Loans</a></li>
+            <li><a href="./budget.html" onclick="return checkLogin()">Budgets</a></li>
+            <li><a href="./goal.html" onclick="return checkLogin()">Goals</a></li>
+            <li><a href="./investment.html">Investment</a></li>
+            <li><a href="./analysis.html" onclick="return checkLogin()">Analysis</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <section class="hero-section">
+            <h1>Take Control of Your Finances</h1>
+            <p>Track expenses, manage budgets, and achieve your financial goals with our comprehensive personal finance tracker.</p>
+            <a href="./transaction.html" class="cta-button" onclick="return checkLogin()">Get Started</a>
+        </section>
+
+        <section class="features">
+            <h2>Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Expense Tracking</h3>
+                    <p>Easily track your daily expenses and income with our intuitive interface.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Budget Management</h3>
+                    <p>Create and manage budgets to keep your spending in check.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Financial Goals</h3>
+                    <p>Set and track your financial goals with visual progress indicators.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Analytics</h3>
+                    <p>Get detailed insights into your spending patterns and financial health.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Personal Finance Tracker. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Check login state and update header dynamically when the page loads
+        document.addEventListener("DOMContentLoaded", () => {
+            const userName = sessionStorage.getItem("user_name"); // Get the username from sessionStorage
+    
+            if (userName) {
+                // If user is logged in, show their name
+                showLoggedInState(userName);
+            } else {
+                // If user is not logged in, show login and sign up buttons
+                showLoginButtons();
+            }
+        });
+    
+        // Display the logged-in state with user's name
+        function showLoggedInState(userName) {
+            const headerContent = document.getElementById("header-content");
+            headerContent.innerHTML = `
+                <span style="color: #fff; font-size: 1.2rem;">Hi, ${userName}</span>
+                <br> <!-- Add some space between Hi and the logout button -->
+                <button onclick="logout()" style="margin-top: 1rem; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; background-color: #fff; color: #1a237e; border: 2px solid #fff;">Logout</button>`;
+        }
+    
+        // Show login buttons if not logged in
+        function showLoginButtons() {
+            const headerContent = document.getElementById("header-content");
+            headerContent.innerHTML = `
+                <a href="./login.html" class="auth-button login-button">Login</a>
+                <a href="./register.html" class="auth-button signup-button">Sign Up</a>`;
+        }
+
+    
+        // Logout function to clear the session and redirect the user
+        function logout() {
+        let user_id = sessionStorage.getItem("user_id");
+    fetch('http://127.0.0.1:5000/logout', { method: 'POST', headers: {"Content-Type": "application/json",},body: JSON.stringify({ user_id })})
+        .then(response => response.json())
+        .then(() => {
+            sessionStorage.removeItem("user_name"); // Clear sessionStorage
+            document.cookie = "user_id=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;"; // Clear cookies
+            window.location.href = "./login.html"; // Redirect to login page
+        })
+        .catch((error) => {
+            console.error("Error logging out:", error);
+        });
+}
+
+    
+        // Restrict access to certain pages if the user is not logged in
+        function checkLogin() {
+            const userName = sessionStorage.getItem("user_name"); // Check if the user is logged in by checking sessionStorage
+    
+            if (!userName) {
+                alert("Please log in to access this page.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

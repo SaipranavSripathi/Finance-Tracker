@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loans Management</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+        }
+
+        nav {
+            background-color: #1a237e;
+            color: #fff;
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding: 1.5rem 0;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        nav ul li {
+            padding: 0 1rem;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .main-content {
+            margin-left: 250px;
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .cont {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+
+        .add_loan,
+        .list_loan {
+            background-color: #ffffff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #1a237e;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #555;
+        }
+
+        form input,
+        form select {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        form input:focus,
+        form select:focus {
+            outline: none;
+            border-color: #1a237e;
+            box-shadow: 0 0 0 2px rgba(26, 35, 126, 0.1);
+        }
+
+        form button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: #283593;
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filters input,
+        .filters select,
+        .filters button {
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        .filters button {
+            background-color: #1a237e;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .filters button:hover {
+            background-color: #283593;
+        }
+
+        .list_loan table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 1rem;
+        }
+
+        .list_loan table th,
+        .list_loan table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .list_loan table th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+            color: #1a237e;
+        }
+
+        .list_loan table tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./transaction.html">Transactions</a></li>
+            <li><a href="./account.html">Accounts</a></li>
+            <li><a href="./loans.html">Loans</a></li>
+            <li><a href="./budget.html">Budgets</a></li>
+            <li><a href="./goal.html">Goals</a></li>
+            <li><a href="./investment.html">Investment</a></li>
+            <li><a href="./analysis.html">Analysis</a></li>
+        </ul>
+    </nav>
+    
+    <div class="main-content">
+        <div class="content-header">
+            <h1>Loan Management</h1>
+        </div>
+
+        <div class="cont">
+            <!-- Add Loan Form -->
+            <div class="add_loan">
+                <header>Add Loan</header>
+                <form id="loanForm">
+                    <label for="loan_type">Loan Type</label>
+                    <select id="loan_type" name="loan_type" required>
+                        <option value="personal">Personal Loan</option>
+                        <option value="home">Home Loan</option>
+                        <option value="auto">Auto Loan</option>
+                        <option value="education">Education Loan</option>
+                    </select>
+                    
+                    <label for="loan_amount">Loan Amount</label>
+                    <input type="number" id="loan_amount" name="loan_amount" required>
+
+                    <label for="oustanding_amount">Outstanding Amount</label>
+                    <input type="number" id="outstanding_amount" name="outstanding_amount" required>
+
+                    <label for="interest">Interest Rate (%)</label>
+                    <input type="number" id="interest" name="interest" step="0.01" required>
+
+                    <label for="start_date">Start Date</label>
+                    <input type="date" id="start_date" name="start_date" required>
+                    
+                    <button type="submit">Add Loan</button>
+                </form>
+            </div>
+
+            <!-- Loan List -->
+            <div class="list_loan">
+                <header>All Loans</header>
+                <!-- Filters -->
+                <div class="filters">
+                    <select id="filter-type">
+                        <option value="">All Types</option>
+                        <option value="personal">Personal Loan</option>
+                        <option value="home">Home Loan</option>
+                        <option value="auto">Auto Loan</option>
+                        <option value="education">Education Loan</option>
+                    </select>
+                    <input type="date" id="filter-start-date" placeholder="Start Date">
+                    <button id="apply-filters">Apply Filters</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Outstanding Amount</th>
+                            <th>Interest Rate</th>
+                            <th>Start Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="loans-table">
+                        <!-- Loans will be dynamically inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchLoans(filters = {}) {
+            const user_id = sessionStorage.getItem("user_id");
+            const payload = { user_id, ...filters };
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/loan', {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                populateLoansTable(data.loan);
+            } catch (error) {
+                console.error('Error fetching loans:', error);
+            }
+        }
+
+        function populateLoansTable(loans) {
+            const loansTable = document.getElementById('loans-table');
+            loansTable.innerHTML = '';
+
+            loans.forEach(loan => {
+                const formattedDate = formatDate(loan.start_date);
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${loan.user_id}</td>
+                    <td>${loan.loan_type}</td>
+                    <td>${loan.amount}</td>
+                    <td>${loan.outstanding_amount}</td>
+                    <td>${loan.interest}%</td>
+                    <td>${formattedDate}</td>
+                `;
+                loansTable.appendChild(row);
+            });
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US');
+        }
+
+        document.getElementById('loanForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const loanData = {
+                user_id: sessionStorage.getItem("user_id"),
+                loan_type: document.getElementById("loan_type").value,
+                amount: document.getElementById("loan_amount").value,
+                outstanding_amount: document.getElementById("outstanding_amount").value,
+                interest: document.getElementById("interest").value,
+                start_date: document.getElementById("start_date").value
+            };
+
+            fetch('http://127.0.0.1:5000/add_loan', { 
+                method: 'POST', 
+                headers: { "Content-Type": "application/json" }, 
+                body: JSON.stringify(loanData) 
+            })
+            .then(response => response.json())
+            .then(() => location.reload())
+            .catch(error => alert('Error adding loan: ' + error));
+        });
+
+        document.getElementById('apply-filters').addEventListener('click', () => {
+            const loanType = document.getElementById('filter-type').value;
+            const startDate = document.getElementById('filter-start-date').value;
+
+            const filters = {};
+            if (loanType) filters.loan_type = loanType;
+            if (startDate) filters.start_date = startDate;
+
+            fetchLoans(filters);
+        });
+
+        // Initial fetch without filters
+        fetchLoans();
+    </script>
+</body>
+</html>

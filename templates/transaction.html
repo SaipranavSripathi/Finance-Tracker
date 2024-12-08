@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Transaction Management</title>
+        <style>
+            body {
+                font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                background-color: #f5f5f5;
+                color: #333;
+                display: flex;
+            }
+    
+            nav {
+                background-color: #1a237e;
+                color: #fff;
+                width: 250px;
+                height: 100vh;
+                position: fixed;
+                left: 0;
+                top: 0;
+                padding: 1.5rem 0;
+                box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+            }
+    
+            nav ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+    
+            nav ul li {
+                padding: 0 1rem;
+            }
+    
+            nav ul li a {
+                color: #fff;
+                text-decoration: none;
+                padding: 0.75rem 1rem;
+                border-radius: 6px;
+                display: block;
+                transition: background-color 0.3s ease;
+            }
+    
+            nav ul li a:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+    
+            .main-content {
+                margin-left: 250px;
+                flex: 1;
+                padding: 2rem;
+            }
+    
+            .cont {
+                max-width: 1200px;
+                margin: 0 auto;
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+                gap: 2rem;
+            }
+    
+            .add_transaction,
+            .list_transaction {
+                background-color: #ffffff;
+                padding: 1.5rem;
+                border-radius: 12px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+    
+            header {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-bottom: 1.5rem;
+                color: #1a237e;
+            }
+    
+            form label {
+                display: block;
+                margin-bottom: 0.5rem;
+                font-weight: 500;
+                color: #555;
+            }
+    
+            form input,
+            form select {
+                width: 100%;
+                padding: 0.75rem;
+                margin-bottom: 1rem;
+                border: 1px solid #e0e0e0;
+                border-radius: 6px;
+                font-size: 1rem;
+                transition: border-color 0.3s ease;
+            }
+    
+            form input:focus,
+            form select:focus {
+                outline: none;
+                border-color: #1a237e;
+                box-shadow: 0 0 0 2px rgba(26, 35, 126, 0.1);
+            }
+    
+            form button {
+                width: 100%;
+                padding: 0.75rem;
+                background-color: #1a237e;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                font-size: 1rem;
+                font-weight: 500;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+    
+            form button:hover {
+                background-color: #283593;
+            }
+    
+            .filters {
+                display: flex;
+                gap: 0.75rem;
+                margin-bottom: 1.5rem;
+                flex-wrap: nowrap;
+                justify-content: flex-start;
+                align-items: center;
+                overflow: hidden;
+            }
+    
+            .filters label {
+                font-size: 0.9rem;
+                font-weight: 600;
+            }
+    
+            .filters input,
+            .filters select,
+            .filters button {
+                padding: 0.5rem;
+                font-size: 0.875rem;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+            }
+    
+            .filters button {
+                background-color: #1a237e;
+                color: white;
+                border: none;
+                cursor: pointer;
+                padding: 0.5rem 1rem;
+                font-weight: 500;
+            }
+    
+            .filters button:hover {
+                background-color: #283593;
+            }
+    
+            .list_transaction table {
+                width: 100%;
+                border-collapse: separate;
+                border-spacing: 0;
+                margin-top: 1rem;
+            }
+    
+            .list_transaction table th,
+            .list_transaction table td {
+                padding: 1rem;
+                text-align: left;
+                border-bottom: 1px solid #e0e0e0;
+            }
+    
+            .list_transaction table th {
+                background-color: #f5f5f5;
+                font-weight: 600;
+                color: #1a237e;
+            }
+    
+            .list_transaction table tr:last-child td {
+                border-bottom: none;
+            }
+        </style>
+    </head>
+<body>
+    <!-- Dynamic header -->
+    <header class="header">
+        <div id="header-content">
+            <!-- Dynamic content will be inserted here -->
+        </div>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./transaction.html">Transactions</a></li>
+            <li><a href="./account.html">Accounts</a></li>
+            <li><a href="./loans.html">Loans</a></li>
+            <li><a href="./budget.html">Budgets</a></li>
+            <li><a href="./goal.html">Goals</a></li>
+            <li><a href="./investment.html">Investment</a></li>
+            <li><a href="./analysis.html">Analysis</a></li>
+        </ul>
+    </nav>
+    
+    <div class="main-content">
+        <div class="content-header">
+            <h1>Transaction Management</h1>
+        </div>
+
+        <div class="cont">
+            <div class="add_transaction">
+                <header>Add Transaction</header>
+                <form id="transactionForm">
+                    <label for="category_id">Category</label>
+                    <select id="category_id" name="category" required>
+                        <option value="housing">Housing</option>
+                        <option value="transportation">Transportation</option>
+                        <option value="food">Food & Groceries</option>
+                        <option value="utilities">Utilities</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="healthcare">Healthcare</option>
+                        <option value="savings">Savings</option>
+                        <option value="other">Other</option>
+                    </select>
+                    
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" name="amount" required>
+
+                    <label for="type">Type</label>
+                    <select id="type" name="type" required>
+                        <option value="CR">CR</option>
+                        <option value="DB">DB</option>
+                    </select>
+                    
+                    <label for="date">Date</label>
+                    <input type="date" id="date" name="date" required>
+
+                    <label for="account_number">Account Number</label>
+                    <input type="text" id="account_number" name="account_number" required>
+
+                    <label for="status">Status</label>
+                    <select id="status" name="status" required>
+                        <option value="Completed">Completed</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                    
+                    <button type="submit">Add Transaction</button>
+                </form>
+            </div>
+
+            <div class="list_transaction">
+                <header>All Transactions</header>
+                <div class="filters">
+                    <label for="filter-date">Date</label>
+                    <input type="date" id="filter-date">
+                    
+                    <label for="filter-type">Type</label>
+                    <select id="filter-type">
+                        <option value="">All</option>
+                        <option value="CR">CR</option>
+                        <option value="DB">DB</option>
+                    </select>
+                    
+                    <label for="filter-category">Category</label>
+                    <select id="filter-category">
+                        <option value="">All</option>
+                        <option value="housing">Housing</option>
+                        <option value="transportation">Transportation</option>
+                        <option value="food">Food & Groceries</option>
+                        <option value="utilities">Utilities</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="healthcare">Healthcare</option>
+                        <option value="savings">Savings</option>
+                        <option value="other">Other</option>
+                    </select>
+                    
+                    <label for="filter-status">Status</label>
+                    <select id="filter-status">
+                        <option value="">All</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                    
+                    <button id="apply-filters">Apply Filters</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Amount</th>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th>Balance</th>
+                            <th>Status</th>
+                            <th>Category</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactions-table">
+                        <!-- Transactions will be dynamically inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function(event) {
+            event.preventDefault();
+            loadTransactions(); // Initial load without filters
+        });
+
+        document.getElementById('apply-filters').addEventListener('click', function(event) {
+            event.preventDefault();
+            loadTransactions(); // Apply filters when button is clicked
+        });
+
+        function loadTransactions() {
+            let user_id = sessionStorage.getItem("user_id");
+            const date = document.getElementById('filter-date').value;
+            const type = document.getElementById('filter-type').value;
+            const category = document.getElementById('filter-category').value;
+            const status = document.getElementById('filter-status').value;
+
+            const filters = {
+                user_id,
+                date,
+                type,
+                category,
+                status
+            };
+
+            fetch('http://127.0.0.1:5000/transaction', {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(filters)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                } else {
+                    populateTransactionsTable(data.transaction);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while fetching transactions.');
+            });
+        }
+
+        function populateTransactionsTable(transactions) {
+            const transactionList = document.getElementById('transactions-table');
+            transactionList.innerHTML = '';
+            transactions.forEach(transaction => {
+                const row = document.createElement('tr');
+                const date = new Date(transaction.date);
+                const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+
+                row.innerHTML = `
+                    <td>${transaction.amount}</td>
+                    <td>${transaction.type}</td>
+                    <td>${formattedDate}</td>
+                    <td>${transaction.balance}</td>
+                    <td>${transaction.status}</td>
+                    <td>${transaction.category_id}</td>
+                `;
+                transactionList.appendChild(row);
+            });
+        }
+        
+        document.getElementById('transactionForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let user_id = sessionStorage.getItem("user_id");
+            const amount = document.getElementById("amount").value;
+            const type = document.getElementById("type").value;
+            const date = document.getElementById("date").value;
+            const status = document.getElementById("status").value;
+            const category_id = document.getElementById("category_id").value;
+            const account_number = document.getElementById("account_number").value;
+
+            fetch('http://127.0.0.1:5000/add_transaction', { 
+                method: 'POST', 
+                headers: {"Content-Type": "application/json"}, 
+                body: JSON.stringify({amount, type, date, status, user_id, category_id, account_number})
+            })
+            .then(response => {
+                if (!response.ok) throw new Error("Invalid transaction data!");
+                return response.json();
+            })
+            .then((data) => {
+                if (data.success) {
+                    alert('Transaction added successfully!');
+                    location.reload();
+                } else {
+                    alert('Failed to add transaction. Please try again.');
+                }
+            })
+            .catch((error) => {
+                console.error("Error adding transaction:", error);
+                alert("An error occurred while adding the transaction.");
+            });
+        });
+    </script>
+</body>
+</html>

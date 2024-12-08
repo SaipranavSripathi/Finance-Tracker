@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+        }
+
+        nav {
+            background-color: #1a237e;
+            color: #fff;
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding: 1.5rem 0;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        nav ul li {
+            padding: 0 1rem;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .main-content {
+            margin-left: 250px;
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .content-header {
+            margin-bottom: 2rem;
+        }
+
+        .content-header h1 {
+            color: #1a237e;
+            font-size: 2rem;
+            margin: 0 0 1rem 0;
+        }
+
+        .cont {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .add-investment,
+        .list-investments {
+            background-color: #ffffff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .list-investments {
+            overflow-x: auto; /* Enable horizontal scrolling if needed */
+            max-width: 100%;  /* Ensures it fits within the available width */
+            box-sizing: border-box; /* Ensure padding is inside the element's width */
+        }
+
+        .section-header {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #1a237e;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #555;
+        }
+
+        form input,
+        form select {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        form input:focus,
+        form select:focus {
+            outline: none;
+            border-color: #1a237e;
+            box-shadow: 0 0 0 2px rgba(26, 35, 126, 0.1);
+        }
+
+        form button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: #283593;
+        }
+
+        .investment-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 1rem;
+            table-layout: fixed;  /* Ensures the columns fit inside the table */
+        }
+
+        .investment-table th,
+        .investment-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+            overflow: hidden;  /* Hide overflowed content */
+            text-overflow: ellipsis; /* Add ellipsis for long text */
+        }
+
+        .investment-table th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+            color: #1a237e;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        .investment-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            nav {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 1rem;
+            }
+
+            nav ul {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .cont {
+                grid-template-columns: 1fr;
+            }
+
+            .list-accounts {
+                padding: 1rem;  /* Reduce padding for smaller screens */
+            }
+
+            .investment-table th,
+            .investment-table td {
+                padding: 0.75rem;  /* Adjust padding for smaller screens */
+                font-size: 0.9rem;  /* Reduce font size for smaller screens */
+            }
+
+            .investment-table {
+                width: 100%;
+                display: block;  /* Make the table scrollable on smaller screens */
+                overflow-x: auto;  /* Allow horizontal scrolling */
+            }
+
+            .section-header {
+                font-size: 1.25rem;  /* Adjust section header font size */
+            }
+
+            /* Ensure proper fitting of content in mobile view */
+            .investment-table td {
+                white-space: nowrap;
+                width: 100%;  /* Ensure the columns don't overflow */
+            }
+        }
+    </style>
+    <!-- <link rel="stylesheet" href="../css/style.css"> -->
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./transaction.html">Transactions</a></li>
+            <li><a href="./account.html">Accounts</a></li>
+            <li><a href="./loans.html">Loans</a></li>
+            <li><a href="./budget.html">Budgets</a></li>
+            <li><a href="./goal.html">Goals</a></li>
+            <li><a href="./investment.html">Investment</a></li>
+            <li><a href="./analysis.html">Analysis</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <div class="content-header">
+            <h1>Investment</h1>
+        </div>
+        <div class="cont">
+            <div class="add-investment">
+                <div class="section-header">Add New Investment Details</div>
+                <form id="investment-form">
+
+                    <label for="investment-type">Investment Type</label>
+                    <input type="text" id="investment-type" name="investment-type" required>
+                    <label for="investment-account">Account Number</label>
+                    <input type="text" id="investment-account" name="investment-account" required>
+                    <label for="investment-name">Investment Name</label>
+                    <input type="text" id="investment-name" name="investment-name" required>
+                    <button type="submit">Add Investment</button>
+                </form>
+            </div>
+
+            <div class="list-investments">
+                <div class="section-header">Investment Details</div>
+                <table class="investment-table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Account Number</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody id="investment-list">
+                        <!-- Investment rows will be inserted here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<script>
+     document.addEventListener('DOMContentLoaded', async () => {
+        const user_id = sessionStorage.getItem("user_id");
+        const payload={
+            user_id: user_id
+        }
+        console.log(payload)
+        try {
+            // Fetch investment from the endpoint
+            const response = await fetch(`http://127.0.0.1:5000/investment`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                const investments = await response.json();
+                console.log(investments)
+                populateInvestmentsTable(investments.investment);
+            } else {
+                const errorData = await response.json();
+                console.error('Error fetching investment details:', errorData.message);
+                // alert('Failed to fetch investment details: ' + errorData.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while fetching investment details.');
+        }
+    });
+
+    // Function to populate the investments table
+    function populateInvestmentsTable(investments) {
+        const investmentsList = document.getElementById('investment-list');
+        investmentsList.innerHTML = ''; // Clear existing rows
+
+        investments.forEach(investment => {
+            const row = document.createElement('tr');
+            const type = investment.investment_type || 'N/A';
+            const account = investment.account_number || 'N/A';
+            const name = investment.name || 'N/A';
+
+            // Create and append table cells
+            row.innerHTML = `
+                <td>${type}</td>
+                <td>${account}</td>
+                <td>${name}</td>
+            `;
+
+            investmentsList.appendChild(row);
+        });
+    }
+
+    document.getElementById('investment-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const investmentType = document.getElementById('investment-type').value;
+    const investmentAccount = document.getElementById('investment-account').value;
+    const investmentName = document.getElementById('investment-name').value;
+    const user_id=sessionStorage.getItem("user_id");
+
+    const payload = {
+        type: investmentType,
+        account_number: investmentAccount,
+        name: investmentName,
+        user_id: user_id
+    };
+
+    try {
+        const response = await fetch('http://127.0.0.1:5000/add_investment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+        // Handle response
+        if (response.ok) {
+            const responseData = await response.json();
+            alert('Investment added successfully!');
+            console.log('Response:', responseData);
+        } else {
+            const errorData = await response.json();
+            alert('Error adding Investment: ' + errorData.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while adding the investment. Please try again.');
+    }
+    });
+
+</script>
+</body>
+</html>

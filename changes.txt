@@ -1,0 +1,4 @@
+1. Run "pip install -r requirements.txt"
+2. Change the ddl file path in __init__.py (Copy paste the enitre path of the ddl.sql file and not the Relative Path)
+3. Update the username and password of MYSQL login, in config.py
+4. Need to insert Category table data from workbench before exeucting the front-end.
